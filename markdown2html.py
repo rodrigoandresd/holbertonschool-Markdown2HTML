@@ -11,23 +11,16 @@ if __name__ == "__main__":
     import os
     import markdown
 
-    # Verificar si se proporcionaron suficientes argumentos
-    if len(sys.argv) < 3:
-        sys.stderr.write("Usage: {} input_file output_file\n".format(sys.argv[0]))
-        sys.exit(1)
-
-    # Verificar si el archivo de entrada existe
-    input_file = sys.argv[1]
-    if not os.path.isfile(input_file):
-        sys.stderr.write("Missing {}\n".format(input_file))
-        sys.exit(1)
-
-    # Convertir el archivo de Markdown a HTML
-    output_file = sys.argv[2]
-    with open(input_file, 'r') as f:
-        html = markdown.markdown(f.read(), output_format='html5')
-    with open(output_file, 'w') as f:
-        f.write(html)
-
-    # Salir con un código de salida 0
-    sys.exit(0)
+    args = len(sys.argv)
+    if args < 2:
+        print(f"Usage: ./markdown2html.py README.md README.html")
+        exit(1)
+    if args >= 2:
+        if not os.path.exists(sys.argv[1]):
+            print(f"Missing {sys.argv[1]}")
+            exit(1)
+        with open(sys.argv[1], "r") as f:
+            markdown = markdown.markdown(f.read())
+        with open(sys.argv[2], "w") as g:
+            g.write(markdown)
+        exit(0)
